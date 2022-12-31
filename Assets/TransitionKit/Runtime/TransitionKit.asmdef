@@ -1,6 +1,6 @@
 {
     "name": "TransitionKit",
-    "rootNamespace": "",
+    "rootNamespace": "AtaGames.TransitionKit.runtime",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,17 +27,17 @@ namespace AtaGames.TransitionKit
 
         public abstract IEnumerator onScreenObscured(TransitionKit transitionKit);
 
-        /// <summary>
-        /// The Issue Here is When I dont want to load a new scene
-        /// I just want to make fake transition. Just Hide Screen to Do Something
-        /// </summary>
-        /// <returns></returns>
+        public abstract Task onScreenObscuredTask(TransitionKit transitionKit);
+
+        public void SetDuration(float duration)
+        {
+            this.transitionTime = duration;
+        }
+
+        //Coroutine Version
         public virtual IEnumerator LoadScene()
         {
-
             TransitionKit.BeforeSceneLoad?.Invoke();
-
-            //OnScreenObscured.?Invoke() Could work here
             AsyncOperation asyncLoad = null;
             // Wait until the asynchronous scene fully loads
             if (string.IsNullOrEmpty(nextSceneName) == false)
@@ -55,13 +56,31 @@ namespace AtaGames.TransitionKit
                     yield return null;
                 }
             }
-
             TransitionKit.AfterSceneLoad?.Invoke();
-
-            yield return Yielders.GetRealTime(TransitionKit.DelayAfterLoad);
-
-
+            yield return Yielders.GetRealTime(TransitionKit.DelayAfterLoad);//What this does ?
         }
 
+        public virtual async void LoadSceneAsync()
+        {
+            TransitionKit.BeforeSceneLoad?.Invoke();
+            AsyncOperation asyncOperation = null;
+            if (string.IsNullOrEmpty(nextSceneName) == false)
+            {
+                asyncOperation = SceneManager.LoadSceneAsync(nextSceneName, TransitionKit.LoadMode);
+                asyncOperation.allowSceneActivation = true;
+            }
+            else if (nextSceneIndex >= 0)
+            {
+                asyncOperation = SceneManager.LoadSceneAsync(nextSceneIndex, TransitionKit.LoadMode);
+            }
+            if (asyncOperation != null)
+            {
+                while (asyncOperation.isDone == false)
+                {
+                    await Task.Yield();
+                }
+            }
+            TransitionKit.AfterSceneLoad?.Invoke();
+        }
     }
 }

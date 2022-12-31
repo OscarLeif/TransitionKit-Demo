@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AtaGames.TransitionKit
@@ -12,8 +10,5 @@ namespace AtaGames.TransitionKit
 
         //Common ID to Transition Shaders
         public static int _Progress = Shader.PropertyToID(nameof(_Progress));
-
-        //Common Tags
-        public const string Player = nameof(Player);//Common TAG
     }
 }
