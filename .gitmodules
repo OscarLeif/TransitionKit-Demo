@@ -1,0 +1,3 @@
+[submodule "Assets/TransitionKit.Core"]
+	path = Assets/TransitionKit.Core
+	url = https://github.com/OscarLeif/TransitionKit.Core.git
