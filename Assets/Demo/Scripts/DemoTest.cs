@@ -14,15 +14,38 @@ public class DemoTest : MonoBehaviour
     public const string DemoSceneB = "DemoSceneB";
 
     public Button FadeButton;
+    public Button OpenCircleButton;
 
     public TransitionType transitionType;
 
     public enum TransitionType { Clasic, Coroutine, Async }
 
+    [SerializeField] public Transform FollowMe;
+
     private void Start()
     {
         DontDestroyOnLoad(this);
         FadeButton.onClick.AddListener(OnFadeExample);
+        OpenCircleButton.onClick.AddListener(OpenCircleScene);
+    }
+
+    private void OpenCircleScene()
+    {
+        if (TransitionKit.IsWorking) return;
+
+        string nextScene = GetNextScene();
+
+        TransitionKit.OnTransitionStart += OnTransitionKitStart;
+        TransitionKit.OnTransitionCompleted += OnTransitionKitEnd;
+
+        TransitionKit.BeforeSceneLoad += BeforeSceneLoad;
+        TransitionKit.AfterSceneLoad += AfterSceneLoad;
+
+        //FollowTransform
+        //TransitionKit.OpenCircle(nextScene, 5f, Color.black, FollowMe);
+
+        //FollowTag
+        TransitionKit.OpenCircle(nextScene, 5f, Color.black, "Player");
     }
 
     /// <summary>
