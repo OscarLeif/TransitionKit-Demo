@@ -1,6 +1,4 @@
 using AtaGames.TransitionKit;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -45,7 +43,7 @@ public class DemoTest : MonoBehaviour
         //TransitionKit.OpenCircle(nextScene, 5f, Color.black, FollowMe);
 
         //FollowTag
-        TransitionKit.OpenCircle(nextScene, 5f, Color.black, "Player");
+        //TransitionKit.OpenCircle(nextScene, 5f, Color.black, "Player");
     }
 
     /// <summary>
