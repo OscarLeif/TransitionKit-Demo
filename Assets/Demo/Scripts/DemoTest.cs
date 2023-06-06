@@ -11,6 +11,8 @@ public class DemoTest : MonoBehaviour
     public const string DemoSceneA = "DemoSceneA";
     public const string DemoSceneB = "DemoSceneB";
 
+    public bool DebugMessage = false;
+
     public Button FadeButton;
     public Button OpenCircleButton;
 
@@ -61,8 +63,8 @@ public class DemoTest : MonoBehaviour
         TransitionKit.BeforeSceneLoad += BeforeSceneLoad;
         TransitionKit.AfterSceneLoad += AfterSceneLoad;
 
-       
-        switch(transitionType)
+
+        switch (transitionType)
         {
             //Clasic Way
             case TransitionType.Clasic:
@@ -82,27 +84,31 @@ public class DemoTest : MonoBehaviour
                 faderAsync.nextSceneName = GetNextScene();
                 TransitionKit.Instance.TransitionWithDelegateTask(faderAsync);
                 break;
-        }        
+        }
     }
 
     private void OnTransitionKitStart()
     {
-        Debug.Log("Transition Kit Start");
+        if (DebugMessage)
+            Debug.Log("Transition Kit Start");
     }
 
     private void OnTransitionKitEnd()
     {
-        Debug.Log("Transition Kit End");
+        if (DebugMessage)
+            Debug.Log("Transition Kit End");
     }
 
     private void BeforeSceneLoad()
     {
-        Debug.Log("Transition Before Load Scene");
+        if (DebugMessage)
+            Debug.Log("Transition Before Load Scene");
     }
 
     private void AfterSceneLoad()
     {
-        Debug.Log("Transition After Load Scene");
+        if (DebugMessage)
+            Debug.Log("Transition After Load Scene");
     }
 
     private string GetNextScene()
