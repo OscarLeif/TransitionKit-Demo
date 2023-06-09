@@ -7,44 +7,32 @@ using UnityEngine.UI;
 /// Canvas Test Example
 /// </summary>
 public class DemoTest : MonoBehaviour
-{    
+{
     public const string DemoSceneA = "DemoSceneA";
     public const string DemoSceneB = "DemoSceneB";
 
     public bool DebugMessage = false;
 
     public Button FadeButton;
-    public Button OpenCircleButton;
+    public Button FadeButtonCoroutine;
 
     public TransitionType transitionType;
 
     public enum TransitionType { Clasic, Coroutine, Async }
 
-    [SerializeField] public Transform FollowMe;    
+    [SerializeField] public Transform FollowMe;
 
     private void Start()
-    {        
+    {
         FadeButton.onClick.AddListener(OnFadeExample);
-        OpenCircleButton.onClick.AddListener(OpenCircleScene);
+        FadeButtonCoroutine.onClick.AddListener(FadeCoroutine);
     }
 
-    private void OpenCircleScene()
+    private void FadeCoroutine()
     {
-        //if (TransitionKit.IsWorking) return;
-
         string nextScene = GetNextScene();
-
-        //TransitionKit.OnTransitionStart += OnTransitionKitStart;
-        //TransitionKit.OnTransitionCompleted += OnTransitionKitEnd;
-
-        //TransitionKit.BeforeSceneLoad += BeforeSceneLoad;
-        //TransitionKit.AfterSceneLoad += AfterSceneLoad;
-
-        //FollowTransform
-        //TransitionKit.OpenCircle(nextScene, 5f, Color.black, FollowMe);
-
-        //FollowTag
-        //TransitionKit.OpenCircle(nextScene, 5f, Color.black, "Player");
+        TransitionKit.Get.NextSceneName = nextScene;
+        TransitionKit.Get.StartCoroutine(TransitionKit.Get.fadeTransition.LoadSceneRoutine());
     }
 
     /// <summary>
@@ -53,7 +41,7 @@ public class DemoTest : MonoBehaviour
     private void OnFadeExample()
     {
         string nextScene = GetNextScene();
-        TransitionKit.Get.FadeScene(nextScene, 1f, Color.black);             
+        TransitionKit.Get.FadeScene(nextScene, 1f, Color.black);
     }
 
     private void OnTransitionKitStart()
