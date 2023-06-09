@@ -52,7 +52,7 @@ public class DemoTest : MonoBehaviour
     /// </summary>
     private void OnFadeExample()
     {
-        string next
+        string nextScene = GetNextScene();
         TransitionKit.Get.FadeScene(nextScene, 1f, Color.black);             
     }
 
